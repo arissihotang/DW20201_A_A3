@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>Region</name>
+    <name>Occupation</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -426,10 +426,10 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2020/12/06 16:36:31.893</created_date>
+    <created_date>2020/12/06 19:37:31.009</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/12/06 22:09:19.210</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2020/12/06 22:09:42.018</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -491,8 +491,18 @@
   </connection>
   <order>
     <hop>
-      <from>Microsoft Excel input</from>
+      <from>Sort rows</from>
+      <to>Unique rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Unique rows</from>
       <to>Select values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Microsoft Excel input</from>
+      <to>Sort rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -528,7 +538,7 @@
     <accept_field/>
     <accept_stepname/>
     <file>
-      <name>E:\YOKBISAYOK\DW\RawatInapIndividu\DataProject\Singapore-Area.xlsx</name>
+      <name>E:\YOKBISAYOK\DW\RawatInapIndividu\DataProject\Patient-Information.xlsx</name>
       <filemask/>
       <exclude_filemask/>
       <file_required>N</file_required>
@@ -536,7 +546,91 @@
     </file>
     <fields>
       <field>
-        <name>region</name>
+        <name>patient-ssn</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-name</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-gender</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-occupation-subcategory</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>occupation-major-group</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-isfromabroad</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-age</name>
+        <type>Number</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-singapore-area</name>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -550,7 +644,7 @@
     </fields>
     <sheets>
       <sheet>
-        <name>singapore-area</name>
+        <name>patient-info</name>
         <startrow>0</startrow>
         <startcol>0</startcol>
       </sheet>
@@ -583,8 +677,85 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>64</xloc>
-      <yloc>16</yloc>
+      <xloc>80</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>occupation-major-group</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>192</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Unique rows</name>
+    <type>Unique</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <count_rows>N</count_rows>
+    <count_field>occupationid</count_field>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
+    <fields>
+      <field>
+        <name>occupation-major-group</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -601,10 +772,56 @@
     </partitioning>
     <fields>
       <field>
-        <name>region</name>
-        <rename>regionname</rename>
+        <name>occupation-major-group</name>
+        <rename>majorgroupname</rename>
+      </field>
+      <field>
+        <name>patient-occupation-subcategory</name>
+        <rename>occupationname</rename>
+      </field>
+      <field>
+        <name>patient-ssn</name>
+        <rename/>
+      </field>
+      <field>
+        <name>patient-name</name>
+        <rename/>
+      </field>
+      <field>
+        <name>patient-gender</name>
+        <rename/>
+      </field>
+      <field>
+        <name>patient-isfromabroad</name>
+        <rename/>
+      </field>
+      <field>
+        <name>patient-age</name>
+        <rename/>
+      </field>
+      <field>
+        <name>patient-singapore-area</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>patient-ssn</name>
+      </remove>
+      <remove>
+        <name>patient-name</name>
+      </remove>
+      <remove>
+        <name>patient-gender</name>
+      </remove>
+      <remove>
+        <name>patient-isfromabroad</name>
+      </remove>
+      <remove>
+        <name>patient-age</name>
+      </remove>
+      <remove>
+        <name>patient-singapore-area</name>
+      </remove>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -615,8 +832,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>192</xloc>
-      <yloc>16</yloc>
+      <xloc>384</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -633,7 +850,7 @@
     </partitioning>
     <connection>HospitalDW</connection>
     <schema>rawatinapindividu</schema>
-    <table>region</table>
+    <table>occupation</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -647,7 +864,7 @@
     <tablename_field/>
     <tablename_in_table>Y</tablename_in_table>
     <return_keys>Y</return_keys>
-    <return_field>regionid</return_field>
+    <return_field>occupationid</return_field>
     <fields>
     </fields>
     <attributes/>
@@ -659,8 +876,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
-      <yloc>16</yloc>
+      <xloc>480</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>Region</name>
+    <name>Procedure</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -426,14 +426,69 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2020/12/06 16:36:31.893</created_date>
+    <created_date>2020/12/06 21:25:37.641</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/12/06 22:09:19.210</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2020/12/06 21:33:52.350</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
+  <connection>
+    <name>Hospital</name>
+    <server>127.0.0.1</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>hospital</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>3306</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>STREAM_RESULTS</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <connection>
     <name>HospitalDW</name>
     <server>127.0.0.1</server>
@@ -491,7 +546,7 @@
   </connection>
   <order>
     <hop>
-      <from>Microsoft Excel input</from>
+      <from>Table input</from>
       <to>Select values</to>
       <enabled>Y</enabled>
     </hop>
@@ -502,8 +557,8 @@
     </hop>
   </order>
   <step>
-    <name>Microsoft Excel input</name>
-    <type>ExcelInput</type>
+    <name>Table input</name>
+    <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -512,68 +567,66 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <header>Y</header>
-    <noempty>Y</noempty>
-    <stoponempty>N</stoponempty>
-    <filefield/>
-    <sheetfield/>
-    <sheetrownumfield/>
-    <rownumfield/>
-    <sheetfield/>
-    <filefield/>
+    <connection>Hospital</connection>
+    <sql>SELECT
+  Name
+, Cost
+FROM hospital.procedures
+</sql>
     <limit>0</limit>
-    <encoding/>
-    <add_to_result_filenames>Y</add_to_result_filenames>
-    <accept_filenames>N</accept_filenames>
-    <accept_field/>
-    <accept_stepname/>
-    <file>
-      <name>E:\YOKBISAYOK\DW\RawatInapIndividu\DataProject\Singapore-Area.xlsx</name>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
-    <fields>
-      <field>
-        <name>region</name>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
         <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>Name</name>
+        <length>30</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>Name</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Asia/Bangkok</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Number</type>
+        <storagetype>normal</storagetype>
+        <name>Cost</name>
         <length>-1</length>
         <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>Cost</comments>
+        <conversion_Mask>####0.0#########;-####0.0#########</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
         <trim_type>none</trim_type>
-        <repeat>N</repeat>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-      </field>
-    </fields>
-    <sheets>
-      <sheet>
-        <name>singapore-area</name>
-        <startrow>0</startrow>
-        <startcol>0</startcol>
-      </sheet>
-    </sheets>
-    <strict_types>N</strict_types>
-    <error_ignored>N</error_ignored>
-    <error_line_skipped>N</error_line_skipped>
-    <bad_line_files_destination_directory/>
-    <bad_line_files_extension>warning</bad_line_files_extension>
-    <error_line_files_destination_directory/>
-    <error_line_files_extension>error</error_line_files_extension>
-    <line_number_files_destination_directory/>
-    <line_number_files_extension>line</line_number_files_extension>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-    <spreadsheet_type>POI</spreadsheet_type>
-    <password>Encrypted </password>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Asia/Bangkok</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -583,7 +636,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>64</xloc>
+      <xloc>48</xloc>
       <yloc>16</yloc>
       <draw>Y</draw>
     </GUI>
@@ -601,8 +654,12 @@
     </partitioning>
     <fields>
       <field>
-        <name>region</name>
-        <rename>regionname</rename>
+        <name>Name</name>
+        <rename>procedurename</rename>
+      </field>
+      <field>
+        <name>Cost</name>
+        <rename>procedurecost</rename>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -615,7 +672,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>192</xloc>
+      <xloc>144</xloc>
       <yloc>16</yloc>
       <draw>Y</draw>
     </GUI>
@@ -633,7 +690,7 @@
     </partitioning>
     <connection>HospitalDW</connection>
     <schema>rawatinapindividu</schema>
-    <table>region</table>
+    <table>procedure</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -647,7 +704,7 @@
     <tablename_field/>
     <tablename_in_table>Y</tablename_in_table>
     <return_keys>Y</return_keys>
-    <return_field>regionid</return_field>
+    <return_field>procedureid</return_field>
     <fields>
     </fields>
     <attributes/>
@@ -659,7 +716,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
+      <xloc>240</xloc>
       <yloc>16</yloc>
       <draw>Y</draw>
     </GUI>

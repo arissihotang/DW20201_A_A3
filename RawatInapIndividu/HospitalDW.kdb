@@ -1,9 +1,9 @@
   <connection>
-    <name>Hospital</name>
+    <name>HospitalDW</name>
     <server>127.0.0.1</server>
     <type>MYSQL</type>
     <access>Native</access>
-    <database>hospital</database>
+    <database>rawatinapindividu</database>
     <port>3306</port>
     <username>root</username>
     <password>Encrypted </password>

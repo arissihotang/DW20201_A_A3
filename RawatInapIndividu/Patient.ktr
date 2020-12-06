@@ -1,6 +1,6 @@
 <transformation>
   <info>
-    <name>Region</name>
+    <name>Patient</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -426,14 +426,69 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2020/12/06 16:36:31.893</created_date>
+    <created_date>2020/12/06 22:26:11.871</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2020/12/06 22:09:19.210</modified_date>
+    <modified_date>2020/12/07 02:52:38.916</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
+  <connection>
+    <name>Hospital</name>
+    <server>127.0.0.1</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>hospital</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>3306</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>STREAM_RESULTS</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <connection>
     <name>HospitalDW</name>
     <server>127.0.0.1</server>
@@ -492,7 +547,17 @@
   <order>
     <hop>
       <from>Microsoft Excel input</from>
-      <to>Select values</to>
+      <to>Formula</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Formula</from>
+      <to>Database lookup</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Database lookup</from>
+      <to>Database lookup 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -500,7 +565,146 @@
       <to>Table output</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Database lookup 2</from>
+      <to>Database lookup 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Database lookup 3</from>
+      <to>Select values</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
+  <step>
+    <name>Database lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>HospitalDW</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>rawatinapindividu</schema>
+      <table>occupation</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>occupation-major-group</name>
+        <field>majorgroupname</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>occupationid</name>
+        <rename>occupationid</rename>
+        <default/>
+        <type>BigNumber</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Database lookup 2</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>HospitalDW</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>rawatinapindividu</schema>
+      <table>area</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>patient-singapore-area</name>
+        <field>areaname</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>areaid</name>
+        <rename>areaid</rename>
+        <default/>
+        <type>BigNumber</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>432</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Formula</name>
+    <type>Formula</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <formula>
+      <field_name>agecategoryname</field_name>
+      <formula_string>if([patient-age]&lt;18;"CHILD";if(and([patient-age]&gt;=18;[patient-age]&lt;31);"YOUNGADULT";if(and([patient-age]&gt;=31;[patient-age]&lt;61);"ADULT";"ELDERLY")))</formula_string>
+      <value_type>String</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <replace_field/>
+    </formula>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>192</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>Microsoft Excel input</name>
     <type>ExcelInput</type>
@@ -528,7 +732,7 @@
     <accept_field/>
     <accept_stepname/>
     <file>
-      <name>E:\YOKBISAYOK\DW\RawatInapIndividu\DataProject\Singapore-Area.xlsx</name>
+      <name>E:\YOKBISAYOK\DW\RawatInapIndividu\DataProject\Patient-Information.xlsx</name>
       <filemask/>
       <exclude_filemask/>
       <file_required>N</file_required>
@@ -536,7 +740,91 @@
     </file>
     <fields>
       <field>
-        <name>region</name>
+        <name>patient-ssn</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-name</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-gender</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-occupation-subcategory</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>occupation-major-group</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-isfromabroad</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-age</name>
+        <type>Number</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>patient-singapore-area</name>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -550,7 +838,7 @@
     </fields>
     <sheets>
       <sheet>
-        <name>singapore-area</name>
+        <name>patient-info</name>
         <startrow>0</startrow>
         <startcol>0</startcol>
       </sheet>
@@ -583,7 +871,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>64</xloc>
+      <xloc>80</xloc>
       <yloc>16</yloc>
       <draw>Y</draw>
     </GUI>
@@ -601,10 +889,69 @@
     </partitioning>
     <fields>
       <field>
-        <name>region</name>
-        <rename>regionname</rename>
+        <name>patient-ssn</name>
+        <rename/>
+      </field>
+      <field>
+        <name>patient-name</name>
+        <rename>patientname</rename>
+      </field>
+      <field>
+        <name>patient-gender</name>
+        <rename>gender</rename>
+      </field>
+      <field>
+        <name>patient-occupation-subcategory</name>
+        <rename/>
+      </field>
+      <field>
+        <name>occupation-major-group</name>
+        <rename/>
+      </field>
+      <field>
+        <name>patient-isfromabroad</name>
+        <rename/>
+      </field>
+      <field>
+        <name>patient-age</name>
+        <rename>age</rename>
+      </field>
+      <field>
+        <name>patient-singapore-area</name>
+        <rename/>
+      </field>
+      <field>
+        <name>agecategoryname</name>
+        <rename/>
+      </field>
+      <field>
+        <name>occupationid</name>
+        <rename/>
+      </field>
+      <field>
+        <name>areaid</name>
+        <rename/>
+      </field>
+      <field>
+        <name>procedureid</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>patient-ssn</name>
+      </remove>
+      <remove>
+        <name>patient-occupation-subcategory</name>
+      </remove>
+      <remove>
+        <name>occupation-major-group</name>
+      </remove>
+      <remove>
+        <name>patient-isfromabroad</name>
+      </remove>
+      <remove>
+        <name>patient-singapore-area</name>
+      </remove>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -615,7 +962,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>192</xloc>
+      <xloc>704</xloc>
       <yloc>16</yloc>
       <draw>Y</draw>
     </GUI>
@@ -633,7 +980,7 @@
     </partitioning>
     <connection>HospitalDW</connection>
     <schema>rawatinapindividu</schema>
-    <table>region</table>
+    <table>patient</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -647,7 +994,7 @@
     <tablename_field/>
     <tablename_in_table>Y</tablename_in_table>
     <return_keys>Y</return_keys>
-    <return_field>regionid</return_field>
+    <return_field>patientid</return_field>
     <fields>
     </fields>
     <attributes/>
@@ -659,7 +1006,55 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
+      <xloc>800</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Database lookup 3</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Hospital</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>hospital</schema>
+      <table>undergoes</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>patient-ssn</name>
+        <field>Patient</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>Procedures</name>
+        <rename>procedureid</rename>
+        <default/>
+        <type>BigNumber</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>576</xloc>
       <yloc>16</yloc>
       <draw>Y</draw>
     </GUI>
